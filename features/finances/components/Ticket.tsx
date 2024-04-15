@@ -1,7 +1,7 @@
-import { Ticket } from "@/api/ticketApi"
-import { View, Text } from "react-native"
+import { TTicket } from '@/api/ticketApi'
+import { View, Text } from 'react-native'
 
-export default function Ticket({}: Ticket) {
+export default function Ticket({}: TTicket) {
   return (
     <View>
       <Text>Ticket</Text>
