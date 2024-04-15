@@ -31,7 +31,7 @@ export const getTicketQuery = ({ id, user_id, type }: TicketQueryProps = {}) =>
       if (id) request = supabase.from('ticket').select('*').eq('id', id)
       else if (user_id) request = supabase.from('ticket').select('*').eq('user_id', user_id)
       else if (type) request = supabase.from('ticket').select('*').eq('type', type)
-      request = supabase.from('ticket').select('*')
+      else request = supabase.from('ticket').select('*')
       const { data, error } = await request
       if (error) throw new Error(error.message)
       return data as TTicket[]
@@ -46,3 +46,9 @@ export const getTicketMutation = () => ({
     return data
   },
 })
+
+export const ticketTypes = [
+  { value: 'finance', label: 'Pitch In' },
+  { value: 'event', label: 'Event' },
+  { value: 'chore', label: 'Chore' },
+]

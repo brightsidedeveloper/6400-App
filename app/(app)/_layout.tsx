@@ -16,6 +16,13 @@ export default function _layout() {
           presentation: 'modal',
         }}
       />
+      <Stack.Screen
+        name='[ticket]'
+        options={{
+          headerShown: true,
+          title: 'Ticket',
+        }}
+      />
     </Stack>
   )
 }

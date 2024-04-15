@@ -1,6 +1,6 @@
-import supabase from "@/lib/supabase"
-import { queryOptions } from "@tanstack/react-query"
-import { z } from "zod"
+import supabase from '@/lib/supabase'
+import { queryOptions } from '@tanstack/react-query'
+import { z } from 'zod'
 
 const CommentSchema = z.object({
   id: z.string(),
@@ -12,15 +12,11 @@ const CommentSchema = z.object({
 
 export type Comment = z.infer<typeof CommentSchema>
 
-export const getCommentQuery = (ticket_id?: string) =>
+export const getCommentQuery = (ticket_id: string) =>
   queryOptions({
-    queryKey: ["comment", ticket_id],
+    queryKey: ['comment', ticket_id],
     async queryFn() {
-      if (!ticket_id) throw new Error("No ticket_id provided")
-      const { data, error } = await supabase
-        .from("comment")
-        .select("*")
-        .eq("ticket_id", ticket_id)
+      const { data, error } = await supabase.from('comment').select('*').eq('ticket_id', ticket_id)
       if (error) throw new Error(error.message)
       return data as Comment[]
     },
