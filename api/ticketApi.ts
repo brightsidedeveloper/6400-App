@@ -20,7 +20,7 @@ export type Ticket = z.infer<typeof TicketSchema>
 export type TicketQueryProps = {
   id?: string
   user_id?: string
-  type?: "purchase" | "event" | "chore"
+  type?: "finance" | "event" | "chore"
 }
 
 export const getTicketQuery = ({ id, user_id, type }: TicketQueryProps = {}) =>
