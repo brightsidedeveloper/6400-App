@@ -31,7 +31,7 @@ export const getTicketQuery = ({ id, user_id }: TicketQueryProps = {}) =>
       request = supabase.from("ticket").select("*")
       const { data, error } = await request
       if (error) throw new Error(error.message)
-      return data
+      return data as Ticket[]
     },
   })
 

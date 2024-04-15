@@ -19,16 +19,21 @@ export const getUserQuery = (id?: string) =>
           .getUser()
           .then(({ data: { user } }) => user?.id)) ?? ""
       if (!id) return null
-      return (
-        (await supabase.from("user").select("*").eq("id", id).single())?.data ??
-        null
-      )
+      const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", id)
+        .single()
+      if (error) throw new Error(error.message)
+      return data as User | null
     },
   })
 
+export type UpdateUserMutationProps = { username?: string; venmo?: string }
+
 export const getUserMutation = () => ({
   mutationKey: ["user"],
-  async mutationFn({ username }: { username: string }) {
-    await supabase.from("user").insert({ username })
+  async mutationFn({ username, venmo }: UpdateUserMutationProps) {
+    await supabase.from("user").upsert({ username, venmo })
   },
 })
