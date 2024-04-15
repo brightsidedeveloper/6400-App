@@ -17,17 +17,22 @@ const TicketSchema = z.object({
 
 export type Ticket = z.infer<typeof TicketSchema>
 
-export type TicketQueryProps = { id?: string; user_id?: string }
+export type TicketQueryProps = {
+  id?: string
+  user_id?: string
+  type?: "purchase" | "event" | "chore"
+}
 
-export const getTicketQuery = ({ id, user_id }: TicketQueryProps = {}) =>
+export const getTicketQuery = ({ id, user_id, type }: TicketQueryProps = {}) =>
   queryOptions({
-    queryKey: ["ticket", id, user_id],
+    queryKey: ["ticket", id, user_id, type],
     async queryFn() {
       let request
-      if (id)
-        request = supabase.from("ticket").select("*").eq("id", id).single()
+      if (id) request = supabase.from("ticket").select("*").eq("id", id)
       else if (user_id)
         request = supabase.from("ticket").select("*").eq("user_id", user_id)
+      else if (type)
+        request = supabase.from("ticket").select("*").eq("type", type)
       request = supabase.from("ticket").select("*")
       const { data, error } = await request
       if (error) throw new Error(error.message)
