@@ -7,6 +7,7 @@ import { Button } from 'react-native-elements'
 
 export default function Ticket({ id, title, description, user_id, status, type, full, date, amount }: TTicket & { full?: boolean }) {
   const router = useRouter()
+  const { data: me } = useQuery(getUserQuery())
   const { data: user } = useQuery(getUserQuery(user_id))
   return (
     <TouchableOpacity className='p-2 border-b border-black' onPress={() => !full && router.push(`/(app)/${id}`)}>
