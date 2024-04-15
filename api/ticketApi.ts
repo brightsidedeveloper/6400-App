@@ -42,7 +42,9 @@ export const getTicketQuery = ({ id, user_id, type }: TicketQueryProps = {}) =>
 
 export const getTicketMutation = () => ({
   mutationKey: ["ticket"],
-  async mutationFn(tickets: Partial<Ticket>[]) {
-    return supabase.from("ticket").insert(tickets)
+  async mutationFn(ticket: Partial<Ticket>) {
+    const { data, error } = await supabase.from("ticket").insert([ticket])
+    if (error) throw new Error(error.message)
+    return data
   },
 })
