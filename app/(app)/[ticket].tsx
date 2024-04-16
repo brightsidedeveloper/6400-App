@@ -3,7 +3,7 @@ import React from 'react'
 import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router'
 import { useQuery } from '@tanstack/react-query'
 import { getTicketQuery } from '@/api/ticketApi'
-import Ticket from '@/features/finances/components/Ticket'
+import Ticket from '@/features/tickets/Ticket'
 
 export default function ViewTicket() {
   const params = useLocalSearchParams()

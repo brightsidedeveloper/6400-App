@@ -1,6 +1,6 @@
-import supabase from "@/lib/supabase"
-import { queryOptions } from "@tanstack/react-query"
-import { z } from "zod"
+import supabase from '@/lib/supabase'
+import { queryOptions } from '@tanstack/react-query'
+import { z } from 'zod'
 
 const UserSchema = z.object({
   id: z.string(),
@@ -10,20 +10,23 @@ const UserSchema = z.object({
 
 export type User = z.infer<typeof UserSchema>
 
+export const getAllUsersQuery = () =>
+  queryOptions({
+    queryKey: ['user', 'all'],
+    async queryFn() {
+      const { data, error } = await supabase.from('user').select('*')
+      if (error) throw new Error(error.message)
+      return data as User[]
+    },
+  })
+
 export const getUserQuery = (id?: string) =>
   queryOptions({
-    queryKey: ["user", id],
+    queryKey: ['user', id],
     async queryFn() {
-      id ??=
-        (await supabase.auth
-          .getUser()
-          .then(({ data: { user } }) => user?.id)) ?? ""
+      id ??= (await supabase.auth.getUser().then(({ data: { user } }) => user?.id)) ?? ''
       if (!id) return null
-      const { data, error } = await supabase
-        .from("user")
-        .select("*")
-        .eq("id", id)
-        .single()
+      const { data, error } = await supabase.from('user').select('*').eq('id', id).single()
       if (error) throw new Error(error.message)
       return data as User | null
     },
@@ -32,8 +35,8 @@ export const getUserQuery = (id?: string) =>
 export type UpdateUserMutationProps = { username?: string; venmo?: string }
 
 export const getUserMutation = () => ({
-  mutationKey: ["user"],
+  mutationKey: ['user'],
   async mutationFn({ username, venmo }: UpdateUserMutationProps) {
-    await supabase.from("user").upsert({ username, venmo })
+    await supabase.from('user').upsert({ username, venmo })
   },
 })

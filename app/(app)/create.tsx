@@ -9,7 +9,8 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 const TicketSubmissionSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
   description: z.string(),
-  date: z.string().min(1, { message: 'Date is required' }),
+  join_date: z.string().min(1, { message: 'Date is required' }),
+  pay_date: z.string().min(1, { message: 'Date is required' }),
   type: z.string(),
   amount: z.number().optional(),
 })
@@ -21,12 +22,13 @@ export default function create() {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [date, setDate] = useState(new Date())
+  const [joinDate, setJoinDate] = useState(new Date())
+  const [payDate, setPayDate] = useState(new Date())
   const [type, setType] = useState(ticketTypes[0].value)
   const [amount, setAmount] = useState(0)
 
   const submitTicket = async () => {
-    const newTicket = { title, description, date: date.toISOString(), type, amount }
+    const newTicket = { title, description, join_date: joinDate.toISOString(), pay_date: payDate.toISOString(), type, amount }
     try {
       TicketSubmissionSchema.parse(newTicket)
       createTicket(newTicket, {
@@ -62,8 +64,12 @@ export default function create() {
         <TextInput value={description} className='p-2 rounded-md border border-blue-500 min-h-64' multiline numberOfLines={7} onChangeText={(text: string) => setDescription(text)} />
       </View>
       <View>
-        <Text className='font-bold'>Date</Text>
-        <DateTimePicker value={date} mode='datetime' onChange={(_: DateTimePickerEvent, date?: Date | undefined) => date && setDate(date)} />
+        <Text className='font-bold'>Join By Date</Text>
+        <DateTimePicker value={joinDate} mode='datetime' onChange={(_: DateTimePickerEvent, date?: Date | undefined) => date && setJoinDate(date)} />
+      </View>
+      <View>
+        <Text className='font-bold'>Pay By Date</Text>
+        <DateTimePicker value={payDate} mode='datetime' onChange={(_: DateTimePickerEvent, date?: Date | undefined) => date && setPayDate(date)} />
       </View>
       <View>
         <Text className='font-bold'>Type</Text>

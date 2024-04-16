@@ -1,16 +1,16 @@
 import supabase from '@/lib/supabase'
 import { queryOptions } from '@tanstack/react-query'
-import { z } from 'zod'
+import { literal, z } from 'zod'
 
 const TicketSchema = z.object({
   id: z.string(),
   user_id: z.string(),
   title: z.string(),
   description: z.string().optional(),
-  contributors: z.array(z.string()),
-  status: z.string(),
+  status: z.union([literal('open'), literal('pending'), literal('closed')]),
   created_at: z.string(),
-  date: z.string(),
+  join_date: z.string(),
+  pay_date: z.string(),
   type: z.string(),
   amount: z.number().optional(),
 })
