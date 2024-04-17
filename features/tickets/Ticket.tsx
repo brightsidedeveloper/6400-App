@@ -1,10 +1,9 @@
 import { TContributor, getContributorMutation, getContributorQuery } from '@/api/contributorApi'
 import { TTicket, ticketTypes } from '@/api/ticketApi'
 import { User, getAllUsersQuery, getUserQuery } from '@/api/userApi'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { View, Text, TouchableOpacity, Linking } from 'react-native'
-import { Button } from 'react-native-elements'
 import Contributor, { NonContributor } from './Contributor'
 
 export default function Ticket({ id, title, description, user_id, status, type, full, join_date, pay_date, amount }: TTicket & { full?: boolean }) {
