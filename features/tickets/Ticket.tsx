@@ -33,7 +33,7 @@ interface TicketTopProps {
   title: TTicket['title']
   description: TTicket['description']
   type: TTicket['type']
-  full: boolean
+  full?: boolean
 }
 
 function TicketTop({ username, title, description, type, full }: TicketTopProps) {
@@ -71,7 +71,7 @@ function TicketTime({ join_date, pay_date }: TicketTimeProps) {
 interface TicketContributorsProps {
   contributors?: TContributor[]
   status: TTicket['status']
-  nonContributors: User[]
+  nonContributors?: User[]
   ticket_id: TTicket['id']
 }
 
@@ -95,7 +95,7 @@ function TicketContributors({ contributors, status, nonContributors, ticket_id }
 interface TicketPayProps {
   amount: number
   contributors?: any[]
-  full: boolean
+  full?: boolean
 }
 
 function TicketPay({ amount, contributors, full }: TicketPayProps) {
